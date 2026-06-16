@@ -5,3 +5,4 @@ __pycache__/
 .idea/
 mainsite/notifications/**/__pycache__/
 mainsite/users_app/templates/static/videos/protein/protein.mp4
+.env
