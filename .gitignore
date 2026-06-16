@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+.idea/
+mainsite/notifications/**/__pycache__/
+mainsite/users_app/templates/static/videos/protein/protein.mp4

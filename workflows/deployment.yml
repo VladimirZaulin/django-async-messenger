@@ -1,0 +1,65 @@
+name: Python CI/CD with Deployment
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  workflow_dispatch:  # Разрешает ручной запуск
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+#    needs: test-and-build  # Запускаем деплой только после успешных тестов
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Create directory with correct permissions
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 2007
+          script: |
+            mkdir -p /home/root/BodyTuner
+            chmod 755 /home/root/BodyTuner
+            echo "Папка создана: /home/root/BodyTuner"
+      - name: Deploy via RSYNC
+        uses: burnett01/rsync-deployments@6.0.0
+        with:
+          switches: -avzr -e "ssh -p 2007"
+          path: ./
+          remote_path: ./BodyTuner/
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.SSH_USERNAME }}
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          remote_port: 2007
+      - name: Launch application via Docker
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 2007
+          script: |
+            # Переходим в папку, куда rsync положил файлы
+            cd ~/BodyTuner/mainsite
+
+            echo "--- Пересборка и запуск контейнеров ---"
+            # -d запускает в фоне, чтобы билд завершился успешно
+            docker compose down
+            docker compose up --build -d
+
+            echo "--- Ожидание инициализации (10 сек) ---"
+            sleep 10
+
+            echo "--- Логи запуска (последние 50 строк) ---"
+            docker compose logs --tail=50
+
+            echo "--- Проверка статуса контейнеров ---"
+            docker compose ps
+
+            echo "--- Проверка доступности сайта ---"
+            curl -s -I http://localhost:8000 | grep HTTP

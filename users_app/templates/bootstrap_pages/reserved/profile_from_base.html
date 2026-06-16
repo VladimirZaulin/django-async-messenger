@@ -1,0 +1,57 @@
+{% extends "_base.html" %}
+
+{% block title %}Профиль пользователя{% endblock %}
+
+{% block content %}
+
+        <div class="content-header">
+            <h1>Профиль пользователя</h1>
+        </div>
+
+        <div class="content-card">
+            <div class="profile-minimal">
+                <h2 class="user-name">{{ user_name }}</h2>  <!-- СЮДА НАДО ВСТАВИТЬ ИМЯ -->
+
+                <div class="subscription-status subscription-active">
+                    {% if subscription_active %}
+                    <i class="bi bi-check-circle-fill me-2"></i>Подписка активна
+                    {% else %}
+                    <div class="subscription-status subscription-inactive">
+                    <i class="bi bi-x-circle-fill me-2"></i>Подписка неактивна
+                    </div>
+                    <div class="profile-actions">
+                        <button class="btn btn-success me-2">Активировать подписку</button>
+<!--                        <button class="btn btn-outline-secondary">Выйти</button>-->
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn btn-outline-success me-2">Управление подпиской</button>
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success mt-2">Выйти</button>
+                    </form>
+<!--                    <button class="btn btn-success">Выйти</button>-->
+                </div>
+            </div>
+        </div>
+
+        <!-- Альтернативный вариант с неактивной подпиской -->
+        <!--
+        <div class="content-card">
+            <div class="profile-minimal">
+                <h2 class="user-name">Иван Иванов</h2>
+
+                <div class="subscription-status subscription-inactive">
+                    <i class="bi bi-x-circle-fill me-2"></i>Подписка неактивна
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn btn-success me-2">Активировать подписку</button>
+                    <button class="btn btn-outline-secondary">Выйти</button>
+                </div>
+            </div>
+        </div>
+        -->
+{% endblock %}

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ПП Гид - Правильное питание</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --pine-color: #2d4a2d;
+            --light-beige: #f5f5dc;
+            --hover-color: #3a5c3a;
+        }
+
+        body {
+            background-color: var(--light-beige);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar {
+            background-color: var(--pine-color);
+            min-height: 100vh;
+            padding: 0;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            padding: 20px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            color: white;
+            font-size: 12px;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            margin: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--hover-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--pine-color);
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 5px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .bottom-nav-item.active, .bottom-nav-item:hover {
+            background-color: var(--hover-color);
+            color: white;
+        }
+
+        .bottom-nav-item i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .content-header {
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        footer {
+            background-color: var(--pine-color);
+            color: white;
+            padding: 15px 0;
+            margin-left: 250px;
+            text-align: center;
+        }
+
+        .feature-card {
+            transition: transform 0.3s;
+            height: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .recipe-image {
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .tip-of-the-day {
+            background-color: #e9f5e9;
+            border-left: 4px solid var(--pine-color);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .lesson-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: white;
+        }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                text-align: center;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            .nav-link span {
+                display: none;
+            }
+
+            .nav-link i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+
+            .main-content, footer {
+                margin-left: 70px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .bottom-nav {
+                display: flex;
+            }
+
+            .main-content, footer {
+                margin-left: 0;
+                padding-bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Боковое меню БЕЗ главной страницы -->
+    <div class="sidebar d-none d-md-block">
+        <div class="logo-container">
+            <div class="logo-placeholder">Логотип</div>
+            <div class="logo-text text-white mt-2">ПП Гид</div>
+        </div>
+
+        <div class="nav-menu">
+            <!-- Главная страница НЕ добавлена в навигацию -->
+            <a href="/profile" class="nav-link">
+            <i class="bi bi-person-circle"></i>
+            <span>Профиль</span>
+            </a>
+            <a href="/lessons" class="nav-link">
+                <i class="bi bi-journal-bookmark"></i>
+                <span>Уроки</span>
+            </a>
+            <a href="/ai_chat" class="nav-link">
+                <i class="bi bi-robot"></i>
+                <span>AI-ментор</span>
+            </a>
+            <a href="/calculator" class="nav-link">
+                <i class="bi bi-calculator"></i>
+                <span>Калькулятор</span>
+            </a>
+<!--            <a href="#" class="nav-link">-->
+<!--                <i class="bi bi-journal-text"></i>-->
+<!--                <span>Рецепты</span>-->
+<!--            </a>-->
+<!--            <a href="#" class="nav-link">-->
+<!--                <i class="bi bi-telephone"></i>-->
+<!--                <span>Контакты</span>-->
+<!--            </a>-->
+        </div>
+    </div>
+
+    <!-- Нижнее меню для мобильных БЕЗ главной страницы -->
+    <nav class="bottom-nav d-md-none">
+        <!-- Главная страница НЕ добавлена в навигацию -->
+        <a href="/profile" class="bottom-nav-item">
+            <i class="bi bi-person-circle"></i>
+            <span>Профиль</span>
+        </a>
+        <a href="/lessons" class="bottom-nav-item">
+            <i class="bi bi-journal-bookmark"></i>
+            <span>Уроки</span>
+        </a>
+        <a href="/ai_chat" class="bottom-nav-item">
+            <i class="bi bi-robot"></i>
+            <span>Ментор</span>
+        </a>
+        <a href="/calculator" class="bottom-nav-item">
+            <i class="bi bi-calculator"></i>
+            <span>Калькулятор</span>
+        </a>
+<!--        <a href="#" class="bottom-nav-item">-->
+<!--            <i class="bi bi-journal-text"></i>-->
+<!--            <span>Рецепты</span>-->
+<!--        </a>-->
+<!--        <a href="#" class="bottom-nav-item">-->
+<!--            <i class="bi bi-telephone"></i>-->
+<!--            <span>Контакты</span>-->
+<!--        </a>-->
+    </nav>
+
+    <!-- Основной контент главной страницы -->
+    <main class="main-content">
+        <div class="content-header">
+            <h1>Худеть это Искусство!</h1>
+            <p class="lead">Ваш персональный помощник в мире правильного питания</p>
+        </div>
+
+        <!-- Недосмотренный урок -->
+        <div class="content-card">
+            <h2><i class="bi bi-play-circle me-2"></i>Недосмотренный урок</h2>
+            <div class="lesson-card">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>Основы подсчета калорий</h4>
+                    <span class="badge bg-warning text-dark">Продолжить</span>
+                </div>
+                <p class="text-muted">Урок о том, как правильно считать калории для эффективного похудения</p>
+                <div class="progress mt-3 mb-2">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p class="small text-muted">Просмотрено 65%</p>
+                <button class="btn btn-success mt-2">
+                    <i class="bi bi-play-fill"></i> Продолжить просмотр
+                </button>
+            </div>
+        </div>
+
+        <!-- Совет дня -->
+        <div class="content-card">
+            <h2><i class="bi bi-lightbulb me-2"></i>Совет дня</h2>
+            <div class="tip-of-the-day">
+                <div class="d-flex align-items-start">
+                    <i class="bi bi-droplet fs-1 me-3 text-primary"></i>
+                    <div>
+                        <h4>Пейте воду перед едой</h4>
+                        <p>Выпивайте стакан воды за 20-30 минут до каждого приема пищи. Это поможет заполнить желудок и снизить чувство голода, что приведет к потреблению меньшего количества калорий во время еды.</p>
+                        <p class="mb-0"><strong>Эффект:</strong> Снижение калорийности питания на 10-15%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Рецепт дня -->
+        <div class="content-card">
+            <h2><i class="bi bi-egg-fried me-2"></i>Рецепт дня</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="https://via.placeholder.com/300x200/4CAF50/FFFFFF?text=Лодочки+из+Кабачков"
+                         alt="Лодочки из кабачков" class="recipe-image w-100">
+                </div>
+                <div class="col-md-8">
+                    <h3>Лодочки из кабачков с куриным фаршем</h3>
+                    <p class="text-muted">Вкусное и низкокалорийное блюдо, богатое белком</p>
+
+                    <h5>Ингредиенты:</h5>
+                    <ul>
+                        <li>Кабачки - 2 шт.</li>
+                        <li>Куриный фарш - 300 г</li>
+                        <li>Лук - 1 шт.</li>
+                        <li>Сметана 10% - 4 ст.л.</li>
+                        <li>Сыр - 60 г</li>
+                    </ul>
+
+                    <h5>Приготовление:</h5>
+                    <ol>
+                        <li>Кабачки разрежьте вдоль и удалите мякоть</li>
+                        <li>Обжарьте фарш с луком и мякотью кабачков</li>
+                        <li>Наполните лодочки фаршем</li>
+                        <li>Запекайте 35 минут при 180°C</li>
+                    </ol>
+
+                    <div class="bg-light p-3 rounded">
+                        <h6>Пищевая ценность на порцию:</h6>
+                        <div class="row">
+                            <div class="col-3"><strong>Ккал:</strong> 215</div>
+                            <div class="col-3"><strong>Белки:</strong> 22г</div>
+                            <div class="col-3"><strong>Жиры:</strong> 8г</div>
+                            <div class="col-3"><strong>Углеводы:</strong> 12г</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Быстрый доступ -->
+        <div class="row mt-4">
+            <div class="col-md-4 mb-3">
+                <div class="content-card feature-card text-center">
+                    <i class="bi bi-calculator fs-1 text-success mb-3"></i>
+                    <h4>Калькулятор БЖУ</h4>
+                    <p>Рассчитайте свою норму калорий и баланс БЖУ</p>
+                    <a href="#" class="btn btn-outline-success">Перейти</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="content-card feature-card text-center">
+                    <i class="bi bi-journal-text fs-1 text-success mb-3"></i>
+                    <h4>Меню на неделю</h4>
+                    <p>Готовый план питания для похудения</p>
+                    <a href="#" class="btn btn-outline-success">Смотреть</a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="content-card feature-card text-center">
+                    <i class="bi bi-chat-dots fs-1 text-success mb-3"></i>
+                    <h4>AI-ментор</h4>
+                    <p>Персональные рекомендации по питанию</p>
+                    <a href="#" class="btn btn-outline-success">Обсудить</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <a href="#" class="footer-link">Политика конфиденциальности</a>
+            <a href="#" class="footer-link">Договор оферты</a>
+            <p class="mt-2 mb-0">© 2023 ПП Гид. Все права защищены</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

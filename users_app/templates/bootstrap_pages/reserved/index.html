@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Искусство Похудения - Похудей без спорта и ограничений!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #2d5a27 0%, #3e7c3e 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #d2691e;
+        }
+        
+        .cta-button {
+            background-color: #ffd166;
+            color: #333;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(255, 209, 102, 0.3);
+        }
+        
+        .cta-button:hover {
+            background-color: #ffc145;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 209, 102, 0.4);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), url('https://images.unsplash.com/photo-1490818387583-1baba5e638af?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            color: #2d5a27;
+        }
+        
+        .hero-highlight {
+            color: #d2691e;
+            font-weight: 800;
+        }
+        
+        .hero-subtitle {
+            font-size: 22px;
+            margin-bottom: 30px;
+            color: #555;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            padding: 60px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #2d5a27;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .benefit-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border-top: 4px solid #3e7c3e;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .benefit-icon {
+            font-size: 40px;
+            color: #3e7c3e;
+            margin-bottom: 20px;
+        }
+        
+        .benefit-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #2d5a27;
+        }
+        
+        /* Course Modules */
+        .modules {
+            padding: 60px 0;
+            background-color: #f1f3f9;
+        }
+        
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .module-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid #3e7c3e;
+        }
+        
+        .module-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2d5a27;
+        }
+        
+        .module-topics {
+            list-style-type: none;
+        }
+        
+        .module-topics li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .module-topics li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #3e7c3e;
+            font-weight: bold;
+        }
+        
+        /* Pricing Section */
+        .pricing {
+            padding: 60px 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .price-card {
+            background: linear-gradient(135deg, #2d5a27 0%, #3e7c3e 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 50px 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 30px rgba(45, 90, 39, 0.3);
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: 800;
+            margin: 20px 0;
+        }
+        
+        .old-price {
+            text-decoration: line-through;
+            opacity: 0.7;
+            font-size: 24px;
+        }
+        
+        .price-note {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .guarantee {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 30px;
+            color: #ffd166;
+            font-weight: 600;
+        }
+        
+        .guarantee i {
+            margin-right: 10px;
+            font-size: 24px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #2d5a27;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: #ffd166;
+        }
+        
+        .copyright {
+            margin-top: 20px;
+            opacity: 0.7;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-peanut"></i> Искусство Похудения
+            </div>
+            <a href="#pricing" class="cta-button">Начать худеть сейчас!</a>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Научись как <span class="hero-highlight">похудеть без спорта</span> и не отказываясь от любимых блюд!</h1>
+            <p class="hero-subtitle">Методика, которая работает на 100%. Без изнурительных тренировок, без голодания, без запретов. Только научный подход и работающие привычки.</p>
+            <a href="#pricing" class="cta-button">ХОЧУ ПОХУДЕТЬ!</a>
+        </div>
+    </section>
+    
+    <!-- Benefits Section -->
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Что вы получите после курса</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Ешьте любимые блюда</h3>
+                    <p>Пицца, паста, десерты — больше никаких запретов. Вы научитесь правильно включать любимые продукты в рацион.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <h3>Без изнурительных тренировок</h3>
+                    <p>Похудение через питание, а не через спорт. Подойдёт даже тем, кто не любит или не может заниматься физически.</p>
+                </div>
+                
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Навсегда меняете мышление</h3>
+                    <p>Выстраиваете новые пищевые привычки, которые останутся с вами на всю жизнь и защитят от возврата веса.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Course Modules -->
+    <section class="modules">
+        <div class="container">
+            <h2 class="section-title">Чему вы научитесь на курсе</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>🏗️ Основа изменений веса</h3>
+                    <ul class="module-topics">
+                        <li>Ключевые принципы похудения без ограничений</li>
+                        <li>Разрушение мифов о диетах и питании</li>
+                        <li>Почему привычки важнее диет</li>
+                        <li>Методика подсчета, которая работает</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>🔍 Погружение в метод подсчета</h3>
+                    <ul class="module-topics">
+                        <li>Основные ошибки и как их избежать</li>
+                        <li>Эффективные стратегии контроля веса</li>
+                        <li>Лайфхаки для упрощения подсчета</li>
+                        <li>Практические инструменты для контроля</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>🍗 Белок, 🥑 Жир, 🍠 Углеводы</h3>
+                    <ul class="module-topics">
+                        <li>Как правильно употреблять белок</li>
+                        <li>Роль жиров в похудении</li>
+                        <li>Углеводы: друзья или враги?</li>
+                        <li>Как избежать срывов</li>
+                    </ul>
+                </div>
+                
+                <div class="module-card">
+                    <h3>⚖️ Дефицит калорий</h3>
+                    <ul class="module-topics">
+                        <li>Как создать дефицит без голода</li>
+                        <li>Что делать при срывах</li>
+                        <li>Как вернуться в нужное русло</li>
+                        <li>План питания на неделю</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Начните меняться уже сегодня</h2>
+            <div class="price-card">
+                <h3>Полный доступ к курсу</h3>
+                <div class="price">4 990 ₽</div>
+                <div class="old-price">9 990 ₽</div>
+                <p class="price-note">Ограниченное предложение! Цена вернётся к обычной через:</p>
+                
+                <div id="countdown" style="font-size: 28px; font-weight: 700; margin: 20px 0; color: #ffd166;">
+                    23:59:59
+                </div>
+                
+                <a href="/payment" class="cta-button" style="background-color: #ffd166; color: #333; font-size: 18px; padding: 15px 40px;">КУПИТЬ КУРС СО СКИДКОЙ</a>
+                
+                <div class="guarantee">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Гарантия возврата денег в течение 14 дней</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Искусство Похудения</div>
+            <p>Научный подход к питанию без ограничений и изнурительных тренировок</p>
+            <p>© 2026 Онлайн-курс "Искусство Похудения". Все права защищены.</p>
+            <p class="copyright">Оплата курса означает согласие с офертой. Контент предназначен для лиц старше 18 лет.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Countdown timer
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            let time = 23 * 60 * 60 + 59 * 60 + 59; // 23:59:59 in seconds
+            
+            const countdownInterval = setInterval(() => {
+                const hours = Math.floor(time / 3600);
+                const minutes = Math.floor((time % 3600) / 60);
+                const seconds = time % 60;
+                
+                countdownElement.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (time <= 0) {
+                    clearInterval(countdownInterval);
+                } else {
+                    time--;
+                }
+            }, 1000);
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Start countdown when page loads
+        window.addEventListener('DOMContentLoaded', startCountdown);
+        
+        // Add animation to CTA buttons on hover
+        document.querySelectorAll('.cta-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

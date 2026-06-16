@@ -1,0 +1,16 @@
+{% block content %}
+    <h1>Введите логин и пароль.</h1>
+   <div class="form_auth_block">
+       <div class="form_auth_block_content">
+    <form class="form_auth_style" action="#" method="post">
+      <input type="email" name="auth_email" placeholder="Введите Ваш имейл" required ><br><br>
+      <input type="password" name="auth_pass" placeholder="Введите пароль" required ><br><br>
+      <button class="form_auth_button" type="submit" name="form_auth_submit">Войти</button><br>
+        <h1>Нет аккаунта?</h1>
+      <button  class="button secondary" type="button" name="register">Зарегистрироваться</button><br>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+

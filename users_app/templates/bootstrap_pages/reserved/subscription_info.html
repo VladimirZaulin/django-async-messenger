@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор БЖУ</title>
+    <!-- Подключение Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Подключение иконок Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --pine-color: #2d4a2d; /* Хвойный цвет */
+            --light-beige: #f5f5dc; /* Светло-бежевый */
+            --hover-color: #3a5c3a; /* Цвет при наведении */
+        }
+
+        body {
+            background-color: var(--light-beige);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 76px; /* Отступ для фиксированного меню на мобильных */
+        }
+
+        /* Боковое меню для десктопов */
+        .sidebar {
+            background-color: var(--pine-color);
+            min-height: 100vh;
+            padding: 0;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            padding: 20px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            color: white;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            margin: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--hover-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Фиксированное нижнее меню для мобильных */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--pine-color);
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 5px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .bottom-nav-item.active, .bottom-nav-item:hover {
+            background-color: var(--hover-color);
+            color: white;
+        }
+
+        .bottom-nav-item i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .content-header {
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        footer {
+            background-color: var(--pine-color);
+            color: white;
+            padding: 15px 0;
+            margin-left: 250px;
+            text-align: center;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                text-align: center;
+            }
+
+            .logo-container {
+                padding: 15px 5px;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            .nav-link span {
+                display: none;
+            }
+
+            .nav-link i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+
+            .main-content, footer {
+                margin-left: 70px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .bottom-nav {
+                display: flex;
+            }
+
+            .main-content, footer {
+                margin-left: 0;
+                padding-bottom: 20px;
+            }
+
+            footer {
+                margin-bottom: 76px; /* Отступ для фиксированного меню */
+            }
+        }
+
+        /* Стили для калькулятора */
+        .calculator-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .result-box {
+            background-color: #e9f5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid var(--pine-color);
+        }
+
+        .form-label {
+            font-weight: 500;
+        }
+
+        .btn-calculate {
+            background-color: var(--pine-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-calculate:hover {
+            background-color: var(--hover-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Боковое меню для десктопов -->
+    <div class="sidebar d-none d-md-block">
+        <div class="logo-container">
+            <div class="logo-placeholder">Логотип</div>
+            <div class="logo-text text-white mt-2">Ваш Сайт</div>
+        </div>
+
+        <div class="nav-menu">
+            <a href="/profile" class="nav-link">
+                <i class="bi bi-person-circle"></i>
+                <span>Профиль</span>
+            </a>
+            <a href="/lessons" class="nav-link">
+                <i class="bi bi-journal-bookmark"></i>
+                <span>Уроки</span>
+            </a>
+            <a href="/ai_chat" class="nav-link">
+                <i class="bi bi-robot"></i>
+                <span>AI-ментор</span>
+            </a>
+            <a href="/calculator" class="nav-link active">
+                <i class="bi bi-calculator"></i>
+                <span>Калькулятор</span>
+            </a>
+<!--            <a href="#" class="nav-link">-->
+<!--                <i class="bi bi-journal-text"></i>-->
+<!--                <span>Рецепты</span>-->
+<!--            </a>-->
+<!--            <a href="#" class="nav-link">-->
+<!--                <i class="bi bi-telephone"></i>-->
+<!--                <span>Контакты</span>-->
+<!--            </a>-->
+        </div>
+    </div>
+
+    <!-- Фиксированное нижнее меню для мобильных -->
+    <nav class="bottom-nav d-md-none">
+        <a href="/profile" class="bottom-nav-item">
+            <i class="bi bi-person-circle"></i>
+            <span>Профиль</span>
+        </a>
+        <a href="/lessons" class="bottom-nav-item">
+            <i class="bi bi-journal-bookmark"></i>
+            <span>Уроки</span>
+        </a>
+        <a href="/ai_chat" class="bottom-nav-item">
+            <i class="bi bi-robot"></i>
+            <span>Ментор</span>
+        </a>
+        <a href="/calculator" class="bottom-nav-item active">
+            <i class="bi bi-calculator"></i>
+            <span>Калькулятор</span>
+        </a>
+<!--        <a href="#" class="bottom-nav-item">-->
+<!--            <i class="bi bi-journal-text"></i>-->
+<!--            <span>Рецепты</span>-->
+<!--        </a>-->
+<!--        <a href="#" class="bottom-nav-item">-->
+<!--            <i class="bi bi-telephone"></i>-->
+<!--            <span>Контакты</span>-->
+<!--        </a>-->
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <div class="content-header">
+            <h1>Добро пожаловать на наш сайт!</h1>
+            <p class="lead">Здесь вы найдете много полезной информации и инструментов</p>
+        </div>
+
+        <div class="content-card">
+            <h2>Условия и порядок предоставления подписки на курс о похудении</h2>
+            <p>
+<p>1. Общие положения</p>
+
+<p>1.1. Настоящий документ регулирует порядок предоставления, использования и прекращения доступа к платному контенту и инструментам (далее — «Подписка») на сайте курса о похудении. Сторонами отношений являются Исполнитель (владелец сайта) и Потребитель (пользователь, приобретающий Подписку).</p>
+
+<p>1.2. Оплачивая Подписку, Потребитель подтверждает, что полностью ознакомился с настоящими условиями и принимает их безоговорочно.</p>
+
+<p>2. Порядок активации и статус Подписки</p>
+
+<p>2.1. Доступ к материалам курса (видеоурокам, методикам, планам питания, персональным кабинетам для отслеживания прогресса и иным инструментам сайта) предоставляется исключительно после успешной оплаты.</p>
+
+<p>2.2. Информация о статусе вашей Подписки (активна или нет) в реальном времени отображается в личном кабинете пользователя (профиле) на сайте. Потребитель обязуется самостоятельно контролировать состояние своей Подписки через данный раздел.</p>
+
+<p>2.3. Подписка предоставляется на фиксированный срок (1 месяц, 3 месяца, 1 год, бессрочно), который указан при выборе тарифа. Автоматического продления (автопролонгации) Подписки после окончания её срока не осуществляется.</p>
+
+<p>3. Прекращение доступа по истечении срока</p>
+
+<p>3.1. По окончании оплаченного периода Подписки доступ к платному контенту и инструментарию сайта автоматически и в полном объёме ограничивается.</p>
+
+<p>3.2. Для возобновления доступа необходимо совершить новую покупку Подписки на текущих условиях сайта.</p>
+
+<p>4. Право на отказ от Подписки и возврат средств</p>
+
+<p>4.1. В соответствии с законодательством Российской Федерации, Потребитель вправе отказаться от исполнения договора об оказании услуги (Подписки).</p>
+
+<p>4.2. Возврат полной суммы оплаты возможен при условии обращения в течение 14 (четырнадцати) календарных дней с момента активации. Возврат осуществляется за вычетом комиссии платежного агрегатора.</p>
+
+<p>4.3. Если в рамках Подписки были использованы какие-либо материалы или сервисы (например, просмотрено более 20% уроков, создан план питания), то при отказе Потребителю возвращается сумма за вычетом стоимости фактически оказанных на момент отказа услуг.</p>
+
+<p>4.4. Основания для возврата средств также включают существенные недостатки услуги, например, если предоставленный контент не соответствует заявленному описанию, ключевые функции сайта недоступны по вине Исполнителя.</p>
+
+<p>5. Важная информация об автоматических списаниях (согласно изменениям в законе с 01.03.2026)</p>
+
+<p>5.1. Обращаем ваше внимание, что в нашей системе отсутствует функция автоматического списания средств (автопродления) после окончания срока Подписки. Каждый новый период оплачивается вами отдельно и осознанно.</p>
+
+<p>5.2. В соответствии с Федеральным законом от 15.10.2025 № 376-ФЗ, который вступает в силу с 1 марта 2026 года, сервисам запрещено использовать для периодических платежей реквизиты банковской карты, если Потребитель выразил отказ от их использования.</p>
+
+<p>5.3. Наша компания строго соблюдает данную норму. Если в будущем в функционал будет добавлено автопродление, то:</p>
+
+<p>Механизм будет реализован только при наличии вашего отдельного, явного и подтвержденного согласия на каждое продление.</p>
+
+<p>В интерфейсе личного кабинета будет реализован простой, понятный и доступный способ в любой момент отвязать карту и отказаться от продления в электронной форме.</p>
+
+<p>6. Контакты для решения вопросов</p>
+
+<p>6.1. Все вопросы, связанные с оплатой, статусом Подписки, техническими проблемами с доступом, а также запросы на возврат денежных средств рассматриваются администрацией сервиса.</p>
+
+<p>6.2. Для оперативной связи просим обращаться в Telegram к администратору: @dream9hacker.</p>
+
+<p>6.3. В обращении необходимо указать логин или email, указанные при регистрации на сайте, и суть вопроса. Срок рассмотрения претензионных обращений о возврате средств составляет до 10 рабочих дней с момента получения всех необходимых данных.</p>
+
+<p>Уведомление о правах потребителя:</p>
+<p>Настоящая оферта составлена с учетом требований Закона РФ «О защите прав потребителей» и Гражданского кодекса РФ. В случае обнаружения недостатков оказанной услуги вы вправе предъявить требования, предусмотренные ст. 29 Закона «О защите прав потребителей».</p>
+
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <a href="#" class="footer-link">Политика конфиденциальности</a>
+            <a href="#" class="footer-link">Договор оферты</a>
+            <p class="mt-2 mb-0">© 2026 Все права защищены</p>
+        </div>
+    </footer>
+
+    <!-- Подключение скриптов Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function calculateBJU() {
+            // Получаем значения из полей ввода
+            const proteinPer100 = parseFloat(document.getElementById('protein').value) || 0;
+            const fatPer100 = parseFloat(document.getElementById('fat').value) || 0;
+            const carbsPer100 = parseFloat(document.getElementById('carbs').value) || 0;
+            const weight = parseFloat(document.getElementById('weight').value) || 0;
+
+            // Проверяем валидность данных
+            if (proteinPer100 + fatPer100 + carbsPer100 > 100) {
+                alert("Сумма БЖУ не может превышать 100 грамм на 100 грамм продукта!");
+                return;
+            }
+
+            // Вычисляем количество БЖУ в съеденной порции
+            const proteinResult = (proteinPer100 * weight / 100).toFixed(1);
+            const fatResult = (fatPer100 * weight / 100).toFixed(1);
+            const carbsResult = (carbsPer100 * weight / 100).toFixed(1);
+
+            // Обновляем результат на странице
+            document.getElementById('proteinResult').textContent = proteinResult;
+            document.getElementById('fatResult').textContent = fatResult;
+            document.getElementById('carbsResult').textContent = carbsResult;
+
+            // Показываем блок с результатом
+            document.getElementById('result').style.display = 'block';
+        }
+
+        // Добавляем обработчик события для формы
+        document.getElementById('bjuCalculator').addEventListener('input', function() {
+            // Можно добавить live-расчет, если нужно
+        });
+    </script>
+</body>
+</html>

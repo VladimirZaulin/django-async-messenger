@@ -1,0 +1,621 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Уроки - Ваш Сайт</title>
+    <!-- Подключение Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Подключение иконок Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --pine-color: #2d4a2d; /* Хвойный цвет */
+            --light-beige: #f5f5dc; /* Светло-бежевый */
+            --hover-color: #3a5c3a; /* Цвет при наведении */
+        }
+
+        body {
+            background-color: var(--light-beige);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 76px; /* Отступ для фиксированного меню на мобильных */
+        }
+
+        /* Боковое меню для десктопов */
+        .sidebar {
+            background-color: var(--pine-color);
+            min-height: 100vh;
+            padding: 0;
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 250px;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            padding: 20px 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo-placeholder {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            color: white;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .nav-menu {
+            padding: 20px 0;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            margin: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--hover-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        /* Фиксированное нижнее меню для мобильных */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--pine-color);
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bottom-nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 5px;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .bottom-nav-item.active, .bottom-nav-item:hover {
+            background-color: var(--hover-color);
+            color: white;
+        }
+
+        .bottom-nav-item i {
+            display: block;
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+        .content-header {
+            padding: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        footer {
+            background-color: var(--pine-color);
+            color: white;
+            padding: 15px 0;
+            margin-left: 250px;
+            text-align: center;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .footer-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Адаптивность для мобильных устройств */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 70px;
+                text-align: center;
+            }
+
+            .logo-container {
+                padding: 15px 5px;
+            }
+
+            .logo-text {
+                display: none;
+            }
+
+            .nav-link span {
+                display: none;
+            }
+
+            .nav-link i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+
+            .main-content, footer {
+                margin-left: 70px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .bottom-nav {
+                display: flex;
+            }
+
+            .main-content, footer {
+                margin-left: 0;
+                padding-bottom: 20px;
+            }
+
+            footer {
+                margin-bottom: 76px; /* Отступ для фиксированного меню */
+            }
+        }
+
+        /* Стили для галереи видео */
+        .video-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            height: 200px;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .video-card:hover .video-thumbnail img {
+            transform: scale(1.05);
+        }
+
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .video-play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            color: white;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .video-card:hover .video-play-icon {
+            opacity: 1;
+        }
+
+        .video-title {
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-meta {
+            color: #6c757d;
+            font-size: 14px;
+        }
+
+        .filter-buttons {
+            margin-bottom: 25px;
+        }
+
+        .filter-btn {
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-radius: 20px;
+            padding: 5px 15px;
+        }
+
+        .search-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            border-radius: 20px;
+            padding-left: 40px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 12px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Боковое меню для десктопов -->
+    <div class="sidebar d-none d-md-block">
+        <div class="logo-container">
+            <div class="logo-placeholder">Логотип</div>
+            <div class="logo-text text-white mt-2">Ваш Сайт</div>
+        </div>
+
+        <div class="nav-menu">
+            <a href="/profile" class="nav-link">
+                <i class="bi bi-person-circle"></i>
+                <span>Профиль</span>
+            </a>
+            <a href="/lessons" class="nav-link active">
+                <i class="bi bi-journal-bookmark"></i>
+                <span>Уроки</span>
+            </a>
+            <a href="/ai_chat" class="nav-link">
+                <i class="bi bi-robot"></i>
+                <span>AI-ментор</span>
+            </a>
+            <a href="/calculator" class="nav-link">
+                <i class="bi bi-calculator"></i>
+                <span>Калькулятор</span>
+            </a>
+<!--            <a href="#" class="nav-link">-->
+<!--                <i class="bi bi-journal-text"></i>-->
+<!--                <span>Рецепты</span>-->
+<!--            </a>-->
+<!--            <a href="#" class="nav-link">-->
+<!--                <i class="bi bi-telephone"></i>-->
+<!--                <span>Контакты</span>-->
+<!--            </a>-->
+        </div>
+    </div>
+
+    <!-- Фиксированное нижнее меню для мобильных -->
+    <nav class="bottom-nav d-md-none">
+        <a href="/profile" class="bottom-nav-item">
+            <i class="bi bi-person-circle"></i>
+            <span>Профиль</span>
+        </a>
+        <a href="/lessons" class="bottom-nav-item active">
+            <i class="bi bi-journal-bookmark"></i>
+            <span>Уроки</span>
+        </a>
+        <a href="/ai_chat" class="bottom-nav-item">
+            <i class="bi bi-robot"></i>
+            <span>Ментор</span>
+        </a>
+        <a href="/calculator" class="bottom-nav-item">
+            <i class="bi bi-calculator"></i>
+            <span>Калькулятор</span>
+        </a>
+<!--        <a href="#" class="bottom-nav-item">-->
+<!--            <i class="bi bi-journal-text"></i>-->
+<!--            <span>Рецепты</span>-->
+<!--        </a>-->
+<!--        <a href="#" class="bottom-nav-item">-->
+<!--            <i class="bi bi-telephone"></i>-->
+<!--            <span>Контакты</span>-->
+<!--        </a>-->
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+        <div class="content-header">
+            <h1>Видеоуроки</h1>
+            <p class="lead">Научитесь худеть с комфортом изучая короткие уроки по порядку.</p>
+        </div>
+
+<!--        <div class="content-card">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="search-box">-->
+<!--                        <i class="bi bi-search"></i>-->
+<!--                        <input type="text" class="form-control" placeholder="Поиск уроков...">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-6">-->
+<!--                    <div class="filter-buttons text-md-end">-->
+<!--                        <button class="btn btn-outline-primary filter-btn active">Все</button>-->
+<!--                        <button class="btn btn-outline-primary filter-btn">Новые</button>-->
+<!--                        <button class="btn btn-outline-primary filter-btn">Популярные</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="row">
+                <!-- Видео 1 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="/inception" class="text-decoration-none text-dark">
+                        <div class="video-card card">
+                            <div class="video-thumbnail">
+                                <img src="{% static 'videos/inception/inception.jpg' %}" alt="Начало обучения">
+                                <div class="video-duration">15:30</div>
+                                <div class="video-play-icon">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="video-title">1. Главный принцип похудения</h5>
+                                <div class="video-meta">
+                                    <span><i class="bi bi-clock"></i> 2 дня назад</span>
+                                    <span class="ms-3"><i class="bi bi-eye"></i> 1.5K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Видео 2 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="/protein" class="text-decoration-none text-dark">
+                        <div class="video-card card">
+                            <div class="video-thumbnail">
+                                <img src="{% static 'videos/protein/protein.jpg' %}" alt="Всё о белках>">
+                                <div class="video-duration">22:15</div>
+                                <div class="video-play-icon">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="video-title">2. Руководство по Белку в питании </h5>
+                                <div class="video-meta">
+                                    <span><i class="bi bi-clock"></i> 5 дней назад</span>
+                                    <span class="ms-3"><i class="bi bi-eye"></i> 2.3K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Видео 3 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="/fat" class="text-decoration-none text-dark">
+                        <div class="video-card card">
+                            <div class="video-thumbnail">
+                                <img src="{% static 'videos/fat/fat.jpg' %}" alt="Жир - друг или враг?">
+                                <div class="video-duration">18:42</div>
+                                <div class="video-play-icon">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="video-title">3. Вся правда о Жире</h5>
+                                <div class="video-meta">
+                                    <span><i class="bi bi-clock"></i> 1 неделю назад</span>
+                                    <span class="ms-3"><i class="bi bi-eye"></i> 3.7K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Видео 4 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="/carbohydrate" class="text-decoration-none text-dark">
+                        <div class="video-card card">
+                            <div class="video-thumbnail">
+                                <img src="{% static 'videos/carbohydrate/carbohydrate.jpg' %}" alt="Какие углеводы нам можно?">
+                                <div class="video-duration">25:10</div>
+                                <div class="video-play-icon">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="video-title">4. Углеводы, как в них разобраться?</h5>
+                                <div class="video-meta">
+                                    <span><i class="bi bi-clock"></i> 2 недели назад</span>
+                                    <span class="ms-3"><i class="bi bi-eye"></i> 4.2K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Видео 5 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="/myth" class="text-decoration-none text-dark">
+                        <div class="video-card card">
+                            <div class="video-thumbnail">
+                                <img src="{% static 'videos/myth/myth.jpg' %}" alt="Мифы о питании">
+                                <div class="video-duration">32:05</div>
+                                <div class="video-play-icon">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="video-title">5. Мифы из-за, которых вы так и не похудели</h5>
+                                <div class="video-meta">
+                                    <span><i class="bi bi-clock"></i> 3 недели назад</span>
+                                    <span class="ms-3"><i class="bi bi-eye"></i> 5.1K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Видео 6 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="/activity" class="text-decoration-none text-dark">
+                        <div class="video-card card">
+                            <div class="video-thumbnail">
+                                <img src="{% static 'videos/activity/activity.jpg' %}" alt="Спорт обязателен?">
+                                <div class="video-duration">28:50</div>
+                                <div class="video-play-icon">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="video-title">6. Как быть со спортом?</h5>
+                                <div class="video-meta">
+                                    <span><i class="bi bi-clock"></i> 1 месяц назад</span>
+                                    <span class="ms-3"><i class="bi bi-eye"></i> 6.8K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                 <!-- Видео 7 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="/deficit" class="text-decoration-none text-dark">
+                        <div class="video-card card">
+                            <div class="video-thumbnail">
+                                <img src="{% static 'videos/deficit/deficit.jpg' %}" alt="Что действительно работает?">
+                                <div class="video-duration">28:50</div>
+                                <div class="video-play-icon">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="video-title">7. Дефицит калорий, и его самый здоровый метод</h5>
+                                <div class="video-meta">
+                                    <span><i class="bi bi-clock"></i> 1 месяц назад</span>
+                                    <span class="ms-3"><i class="bi bi-eye"></i> 6.8K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                 <!-- Видео 8 -->
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <a href="/breakdown" class="text-decoration-none text-dark">
+                        <div class="video-card card">
+                            <div class="video-thumbnail">
+                                <img src="{% static 'videos/breakdown/breakdown.jpg' %}" alt="Я съел запретное! Что делать">
+                                <div class="video-duration">28:50</div>
+                                <div class="video-play-icon">
+                                    <i class="bi bi-play-circle-fill"></i>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="video-title">8. Лайфхаки, как срываться, но успешно худеть</h5>
+                                <div class="video-meta">
+                                    <span><i class="bi bi-clock"></i> 1 месяц назад</span>
+                                    <span class="ms-3"><i class="bi bi-eye"></i> 6.8K</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+<!--            &lt;!&ndash; Пагинация &ndash;&gt;-->
+<!--            <nav aria-label="Page navigation">-->
+<!--                <ul class="pagination justify-content-center">-->
+<!--                    <li class="page-item disabled">-->
+<!--                        <a class="page-link" href="#" tabindex="-1">Назад</a>-->
+<!--                    </li>-->
+<!--                    <li class="page-item active"><a class="page-link" href="#">1</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                    <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                    <li class="page-item">-->
+<!--                        <a class="page-link" href="#">Вперед</a>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </nav>-->
+        </div>
+    </main>
+
+    <!-- Футер СКРЫТ-->
+<!--    <footer>-->
+<!--        <div class="container">-->
+<!--            <a href="#" class="footer-link">Политика конфиденциальности</a>-->
+<!--            <a href="#" class="footer-link">Договор оферты</a>-->
+<!--            <p class="mt-2 mb-0">© 2023 Все права защищены</p>-->
+<!--        </div>-->
+<!--    </footer>-->
+
+    <!-- Подключение скриптов Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Простой скрипт для фильтрации и поиска (для демонстрации)
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Удаляем активный класс у всех кнопок
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Добавляем активный класс к текущей кнопке
+                    this.classList.add('active');
+
+                    // Здесь будет логика фильтрации
+                    console.log('Фильтр: ' + this.textContent);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
